@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using app.Models;
+using System.Runtime.InteropServices;
 
 namespace app.Controllers
 {
@@ -32,6 +33,17 @@ namespace app.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Crash()
+        {
+            var p = Marshal.AllocHGlobal(1);
+            for (var _ = 0u; _ < 100_000_000; _++)
+            {
+                p = new IntPtr(p.ToInt64() + 1);
+                Marshal.WriteByte(p, 0xff);
+            }
+            return Ok();
         }
     }
 }
