@@ -14,6 +14,7 @@ namespace app
     {
         public static void Main(string[] args)
         {
+            //test
             BuildWebHost(args).Run();
         }
 
